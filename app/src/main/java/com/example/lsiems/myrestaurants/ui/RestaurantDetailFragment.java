@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
 import com.example.lsiems.myrestaurants.models.Restaurant;
+import com.firebase.client.Firebase;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -21,6 +24,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class RestaurantDetailFragment extends Fragment implements View.OnClickListener {
+    private Firebase mFirebaseRef;
+    private String mCurrentUserUid;
+    private Restaurant mRestaurant;
     private static final int MAX_WIDTH = 400;
     private static final int MAX_HEIGHT = 300;
     @Bind(R.id.restaurantImageView) ImageView mImageLabel;
@@ -31,8 +37,6 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     @Bind(R.id.phoneTextView) TextView mPhoneLabel;
     @Bind(R.id.addressTextView) TextView mAddressLabel;
     @Bind(R.id.saveRestaurantButton) TextView mSaveRestaurantButton;
-
-    private Restaurant mRestaurant;
 
 
     public static RestaurantDetailFragment newInstance(Restaurant restaurant) {
@@ -47,6 +51,8 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRestaurant = Parcels.unwrap(getArguments().getParcelable("restaurant"));
+        mFirebaseRef = MyRestaurantsApplication.getAppInstance().getFirebaseRef();
+        mCurrentUserUid = mFirebaseRef.getAuth().getUid();
     }
 
 
@@ -69,6 +75,7 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
         mWebsiteLabel.setOnClickListener(this);
         mPhoneLabel.setOnClickListener(this);
         mAddressLabel.setOnClickListener(this);
+        mSaveRestaurantButton.setOnClickListener(this);
         return view;
     }
 
@@ -90,6 +97,11 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
                             + "," + mRestaurant.getLongitude()
                             + "?q=(" + mRestaurant.getName() + ")"));
             startActivity(mapIntent);
+        }
+        if (v == mSaveRestaurantButton) {
+            mFirebaseRef.child("restaurants/" + mCurrentUserUid + "/"
+                    + mRestaurant.getName()).setValue(mRestaurant);
+            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }
     }
 }

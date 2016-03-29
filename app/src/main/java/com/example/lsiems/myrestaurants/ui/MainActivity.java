@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            String zipRegex = "^[0-9]{5}(?:-[0-9]{4})?$";
 //            Pattern pattern = Pattern.compile(zipRegex);
 //            Matcher matcher = pattern.matcher(location);
-            Intent intent = new Intent(MainActivity.this, RestaurantsListActivity.class);
+            Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
             startActivity(intent);
         }
     }
