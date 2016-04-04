@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.lsiems.myrestaurants.R;
 import com.example.lsiems.myrestaurants.models.Restaurant;
 import com.example.lsiems.myrestaurants.ui.RestaurantDetailActivity;
+import com.example.lsiems.myrestaurants.util.ItemTouchHelperViewHolder;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * Created by lsiems on 3/28/16.
  */
-public class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
   private static final int MAX_WIDTH = 200;
   private static final int MAX_HEIGHT = 200;
   @Bind(R.id.restaurantImageView) ImageView mRestaurantImageView;
@@ -57,5 +58,15 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Vie
     mNameTextView.setText(restaurant.getName());
     mCategoryTextView.setText(restaurant.getCategories().get(0));
     mRatingTextView.setText("Rating: " + restaurant.getRating() + "/5");
+  }
+
+  @Override
+  public void onItemSelected() {
+    //add animation
+  }
+
+  @Override
+  public void onItemClear() {
+    //add animation
   }
 }

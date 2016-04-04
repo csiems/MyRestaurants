@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,20 +15,23 @@ import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
 import com.example.lsiems.myrestaurants.adapters.FirebaseRestaurantListAdapter;
 import com.example.lsiems.myrestaurants.models.Restaurant;
+import com.example.lsiems.myrestaurants.util.OnStartDragListener;
+import com.example.lsiems.myrestaurants.util.SimpleItemTouchHelperCallback;
 import com.firebase.client.Firebase;
 import com.firebase.client.Query;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SavedRestaurantListActivity extends AppCompatActivity {
+public class SavedRestaurantListActivity extends AppCompatActivity implements OnStartDragListener {
   private Query mQuery;
   private Firebase mFirebaseRef;
   private String mCurrentUserUid;
   private FirebaseRestaurantListAdapter mAdapter;
+  private ItemTouchHelper mItemTouchHelper;
 
-  @Bind(R.id.recyclerView)
-  RecyclerView mRecyclerView;
+  @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +49,16 @@ public class SavedRestaurantListActivity extends AppCompatActivity {
 
   private void setUpFirebaseQuery() {
     String location = mFirebaseRef.child("restaurants/" + mCurrentUserUid).toString();
-    mQuery = new Firebase(location);
+    mQuery = new Firebase(location).orderByChild("index");
   }
 
   private void setUpRecyclerView() {
-    mAdapter = new FirebaseRestaurantListAdapter(mQuery, Restaurant.class);
+    mAdapter = new FirebaseRestaurantListAdapter(mQuery, Restaurant.class, this);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     mRecyclerView.setAdapter(mAdapter);
+    ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+    mItemTouchHelper = new ItemTouchHelper(callback);
+    mItemTouchHelper.attachToRecyclerView(mRecyclerView);
   }
 
   @Override
@@ -75,5 +82,21 @@ public class SavedRestaurantListActivity extends AppCompatActivity {
     mFirebaseRef.unauth();
     Intent intent = new Intent(this, LoginActivity.class);
     startActivity(intent);
+  }
+
+  @Override
+  public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+    mItemTouchHelper.startDrag(viewHolder);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    for (Restaurant restaurant : mAdapter.getItems()) {
+      restaurant.setIndex(Integer.toString(mAdapter.getItems().indexOf(restaurant)));
+      mFirebaseRef.child("restaurants/" + mCurrentUserUid + "/"
+            + restaurant.getName())
+            .setValue(restaurant);
+    }
   }
 }
