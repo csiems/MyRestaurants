@@ -33,6 +33,8 @@
         <activity android:name=".ui.RestaurantDetailActivity"/>
         <activity android:name=".ui.RestaurantListActivity">
         </activity>
+        <activity android:name=".ui.SavedRestaurantListActivity">
+        </activity>
     </application>
 
 </manifest>

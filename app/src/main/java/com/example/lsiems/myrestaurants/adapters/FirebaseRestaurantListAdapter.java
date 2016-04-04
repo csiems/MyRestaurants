@@ -7,8 +7,7 @@ import com.example.lsiems.myrestaurants.R;
 import com.example.lsiems.myrestaurants.models.Restaurant;
 import com.example.lsiems.myrestaurants.util.FirebaseRecyclerAdapter;
 import com.firebase.client.Query;
-import com.firebase.client.core.view.View;
-
+import android.view.View;
 /**
  * Created by lsiems on 3/28/16.
  */
@@ -20,7 +19,8 @@ public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<Resta
 
   @Override
   public RestaurantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-  View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_list_item, parent, false);
+    View view = LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.restaurant_list_item, parent, false);
     return new RestaurantViewHolder(view, getItems());
   }
 
