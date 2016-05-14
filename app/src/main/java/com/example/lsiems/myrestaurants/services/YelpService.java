@@ -2,6 +2,7 @@ package com.example.lsiems.myrestaurants.services;
 
 import android.content.Context;
 
+import com.example.lsiems.myrestaurants.BuildConfig;
 import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
 import com.example.lsiems.myrestaurants.models.Restaurant;
@@ -33,12 +34,13 @@ public class YelpService {
     }
 
     public void findRestaurants(String location, Callback callback) {
-        String CONSUMER_KEY = mContext.getString(R.string.consumer_key);
-        String CONSUMER_SECRET = mContext.getString(R.string.consumer_secret);
-        String TOKEN = mContext.getString(R.string.token);
-        String TOKEN_SECRET = mContext.getString(R.string.token_secret);
-        OkHttpOAuthConsumer consumer = new OkHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
-        consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+        final String YELP_CONSUMER_KEY = BuildConfig.YELP_CONSUMER_KEY;
+        final String YELP_CONSUMER_SECRET = BuildConfig.YELP_CONSUMER_SECRET;
+        final String YELP_TOKEN = BuildConfig.YELP_TOKEN;
+        final String YELP_TOKEN_SECRET = BuildConfig.YELP_TOKEN_SECRET;
+
+        OkHttpOAuthConsumer consumer = new OkHttpOAuthConsumer(YELP_CONSUMER_KEY, YELP_CONSUMER_SECRET);
+        consumer.setTokenWithSecret(YELP_TOKEN, YELP_TOKEN_SECRET);
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new SigningInterceptor(consumer))

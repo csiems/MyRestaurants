@@ -1,11 +1,7 @@
 <resources>
     <string name="app_name">MyRestaurants</string>
 
-    <!--API Keys-->
-    <string name="consumer_key">mAX3OAXHNlF58px32iLdjw</string>
-    <string name="consumer_secret">OvpTREBdizhiltrWSxCSOyNCkNY</string>
-    <string name="token">IuihiRRIR4We7Xpte2uIFgjBHsg4Mzrr</string>
-    <string name="token_secret">Ka9lUCAvRdiEoaCa3Ai8eEi8178</string>
+
 
     <string name="preference_file_key">com.example.lsiems.myrestaurants.PREFERENCE_FILE_KEY</string>
     <string name="firebase_url">https://siems-myrestaurants.firebaseio.com/</string>
