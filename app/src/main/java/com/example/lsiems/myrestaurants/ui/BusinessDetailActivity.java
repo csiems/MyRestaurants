@@ -26,7 +26,7 @@ public class BusinessDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_detail);
         ButterKnife.bind(this);
-        mBusinesses = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
+        mBusinesses = Parcels.unwrap(getIntent().getParcelableExtra("businesses"));
         int startingPosition = Integer.parseInt(getIntent().getStringExtra("position"));
         adapterViewPager = new BusinessPagerAdapter(getSupportFragmentManager(), mBusinesses);
         mViewPager.setAdapter(adapterViewPager);

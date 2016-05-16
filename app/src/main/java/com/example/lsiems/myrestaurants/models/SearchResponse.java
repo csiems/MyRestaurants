@@ -12,10 +12,14 @@ public class SearchResponse {
 
     public ArrayList<Business> businesses = new ArrayList<>();
     public Integer total;
-//    public Map<String, Object> additionalProperties = new HashMap<>();
 
     public SearchResponse() {
         //empty bean constructor for Parcel
+    }
+
+    public SearchResponse(ArrayList<Business> businesses, Integer total) {
+        this.businesses = businesses;
+        this.total = total;
     }
 
     public ArrayList<Business> getBusinesses() {
@@ -33,13 +37,5 @@ public class SearchResponse {
     public void setTotal(Integer total) {
         this.total = total;
     }
-
-//    public Map<String, Object> getAdditionalProperties() {
-//        return this.additionalProperties;
-//    }
-//
-//    public void setAdditionalProperty(String name, Object value) {
-//        this.additionalProperties.put(name, value);
-//    }
 
 }

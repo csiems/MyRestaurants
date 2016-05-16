@@ -47,7 +47,7 @@ public class SavedBusinessListActivity extends AppCompatActivity implements OnSt
   }
 
   private void setUpFirebaseQuery() {
-    String location = mFirebaseRef.child("restaurants/" + mCurrentUserUid).toString();
+    String location = mFirebaseRef.child("businesses/" + mCurrentUserUid).toString();
     mQuery = new Firebase(location).orderByChild("index");
   }
 

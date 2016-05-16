@@ -25,9 +25,12 @@ import com.example.lsiems.myrestaurants.services.YelpAPIFactory;
 import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class BusinessListActivity extends AppCompatActivity {
   public static final String TAG = MainActivity.class.getSimpleName();
@@ -37,7 +40,7 @@ public class BusinessListActivity extends AppCompatActivity {
   final String YELP_TOKEN_SECRET = BuildConfig.YELP_TOKEN_SECRET;
   @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
   private BusinessListAdapter mAdapter;
-  public ArrayList<Business> mBusinesses = new ArrayList<>();
+  public List<Business> mBusinesses = new ArrayList<>();
   private SharedPreferences mSharedPreferences;
   private SharedPreferences.Editor mEditor;
   private String mRecentAddress;
@@ -111,12 +114,16 @@ public class BusinessListActivity extends AppCompatActivity {
     String term = "food";
     YelpAPIFactory apiFactory = new YelpAPIFactory(YELP_CONSUMER_KEY, YELP_CONSUMER_SECRET, YELP_TOKEN, YELP_TOKEN_SECRET);
     YelpAPI yelpAPI = apiFactory.createAPI();
-    retrofit2.Call<SearchResponse> call = yelpAPI.search(term, location);
-    retrofit2.Callback<SearchResponse> callback = new retrofit2.Callback<SearchResponse>() {
+    Call<SearchResponse> call = yelpAPI.search(term, location);
+    Callback<SearchResponse> callback = new Callback<SearchResponse>() {
       @Override
       public void onResponse(retrofit2.Call<SearchResponse> call, retrofit2.Response<SearchResponse> response) {
         SearchResponse searchResponse = response.body();
-        mBusinesses = searchResponse.getBusinesses();
+        try {
+          mBusinesses = searchResponse.getBusinesses();
+        } catch (NullPointerException e) {
+          e.printStackTrace();
+        }
 
         BusinessListActivity.this.runOnUiThread(new Runnable() {
           @Override

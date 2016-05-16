@@ -10,19 +10,22 @@ import java.util.Map;
 @Parcel
 public class Location {
 
-    public ArrayList<String> address = new ArrayList<String>();
+    public ArrayList<String> address = new ArrayList<>();
     public String city;
     public Coordinate coordinate;
     public String countryCode;
     public String crossStreets;
-    public ArrayList<String> displayAddress = new ArrayList<String>();
+    public ArrayList<String> displayAddress = new ArrayList<>();
     public Double geoAccuracy;
-    public ArrayList<String> neighborhoods = new ArrayList<String>();
+    public ArrayList<String> neighborhoods = new ArrayList<>();
     public String postalCode;
     public String stateCode;
-//    public Map<String, Object> additionalProperties = new HashMap<>();
 
-    public Location(ArrayList<String> address, String city, Coordinate coordinate, String countryCode, String crossStreets, ArrayList<String> displayAddress, Double geoAccuracy, ArrayList<String> neighborhoods, String postalCode, String stateCode, Map<String, Object> additionalProperties) {
+    public Location() {
+        //empty bean constructor
+    }
+
+    public Location(ArrayList<String> address, String city, Coordinate coordinate, String countryCode, String crossStreets, ArrayList<String> displayAddress, Double geoAccuracy, ArrayList<String> neighborhoods, String postalCode, String stateCode) {
         this.address = address;
         this.city = city;
         this.coordinate = coordinate;
@@ -33,7 +36,6 @@ public class Location {
         this.neighborhoods = neighborhoods;
         this.postalCode = postalCode;
         this.stateCode = stateCode;
-//        this.additionalProperties = additionalProperties;
     }
 
     public ArrayList<String> getAddress() {
@@ -115,13 +117,5 @@ public class Location {
     public void setStateCode(String stateCode) {
         this.stateCode = stateCode;
     }
-//
-//    public Map<String, Object> getAdditionalProperties() {
-//        return this.additionalProperties;
-//    }
-//
-//    public void setAdditionalProperty(String name, Object value) {
-//        this.additionalProperties.put(name, value);
-//    }
 
 }

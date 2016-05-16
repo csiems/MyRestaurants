@@ -10,15 +10,16 @@ import com.example.lsiems.myrestaurants.R;
 import com.example.lsiems.myrestaurants.models.Business;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Guest on 3/22/16.
  */
 public class BusinessListAdapter extends RecyclerView.Adapter<BusinessViewHolder> {
-    private ArrayList<Business> mBusinesses = new ArrayList<>();
+    private List<Business> mBusinesses = new ArrayList<>();
     private Context mContext;
 
-    public BusinessListAdapter(Context context, ArrayList<Business> restaurants) {
+    public BusinessListAdapter(Context context, List<Business> restaurants) {
         mContext = context;
         mBusinesses = restaurants;
     }

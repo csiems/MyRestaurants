@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,9 +29,9 @@ public class BusinessViewHolder extends RecyclerView.ViewHolder implements View.
   @Bind(R.id.categoryTextView) TextView mCategoryTextView;
   @Bind(R.id.ratingTextView) TextView mRatingTextView;
   private Context mContext;
-  ArrayList<Business> mBusinesses = new ArrayList<>();
+  List<Business> mBusinesses = new ArrayList<>();
 
-  public BusinessViewHolder(View itemView, ArrayList<Business> businesses) {
+  public BusinessViewHolder(View itemView, List<Business> businesses) {
     super(itemView);
     ButterKnife.bind(this, itemView);
     mContext = itemView.getContext();

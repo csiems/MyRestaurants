@@ -28,13 +28,12 @@ public class Business {
     public String snippetImageUrl;
     public String snippetText;
     public String url;
-//    public Map<String, Object> additionalProperties = new HashMap<>();
 
     public Business() {
-        //empty bean constructor for Parcel
+        //empty bean constructor
     }
 
-    public Business(ArrayList<ArrayList<String>> categories, String displayPhone, String id, String imageUrl, Boolean isClaimed, Boolean isClosed, Location location, String mobileUrl, String name, String phone, Double rating, String ratingImgUrl, String ratingImgUrlLarge, String ratingImgUrlSmall, Integer reviewCount, String snippetImageUrl, String snippetText, String url, Map<String, Object> additionalProperties) {
+    public Business(ArrayList<ArrayList<String>> categories, String displayPhone, String id, String imageUrl, Boolean isClaimed, Boolean isClosed, Location location, String mobileUrl, String name, String phone, Double rating, String ratingImgUrl, String ratingImgUrlLarge, String ratingImgUrlSmall, Integer reviewCount, String snippetImageUrl, String snippetText, String url) {
         this.categories = categories;
         this.displayPhone = displayPhone;
         this.id = id;
@@ -53,7 +52,6 @@ public class Business {
         this.snippetImageUrl = snippetImageUrl;
         this.snippetText = snippetText;
         this.url = url;
-//        this.additionalProperties = additionalProperties;
     }
 
     public ArrayList<ArrayList<String>> getCategories() {
@@ -199,13 +197,5 @@ public class Business {
     public void setUrl(String url) {
         this.url = url;
     }
-
-//    public Map<String, Object> getAdditionalProperties() {
-//        return this.additionalProperties;
-//    }
-//
-//    public void setAdditionalProperty(String name, Object value) {
-//        this.additionalProperties.put(name, value);
-//    }
 
 }

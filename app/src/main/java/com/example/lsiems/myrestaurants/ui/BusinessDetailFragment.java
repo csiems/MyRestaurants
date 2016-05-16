@@ -62,14 +62,14 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         ButterKnife.bind(this, view);
 
         Picasso.with(view.getContext())
-                .load(mBusiness.getImageUrl())
+                .load(mBusiness.imageUrl)
                 .resize(MAX_WIDTH, MAX_HEIGHT)
                 .centerCrop()
                 .into(mImageLabel);
-        mNameLabel.setText(mBusiness.getName());
-        mCategoriesLabel.setText(android.text.TextUtils.join(", ", mBusiness.getCategories()));
-        mRatingLabel.setText(Double.toString(mBusiness.getRating()) + "/5");
-        mPhoneLabel.setText(mBusiness.getPhone());
+        mNameLabel.setText(mBusiness.name);
+        mCategoriesLabel.setText(android.text.TextUtils.join(", ", mBusiness.categories));
+        mRatingLabel.setText(Double.toString(mBusiness.rating) + "/5");
+        mPhoneLabel.setText(mBusiness.phone);
         mAddressLabel.setText(android.text.TextUtils.join(", ", mBusiness.location.address));
 
         mWebsiteLabel.setOnClickListener(this);
@@ -99,7 +99,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             startActivity(mapIntent);
         }
         if (v == mSaveBusinessButton) {
-            mFirebaseRef.child("businesss/" + mCurrentUserUid + "/"
+            mFirebaseRef.child("businesses/" + mCurrentUserUid + "/"
                     + mBusiness.name).setValue(mBusiness);
             Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }

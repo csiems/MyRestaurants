@@ -10,16 +10,14 @@ public class Coordinate {
 
     public Double latitude;
     public Double longitude;
-//    public Map<String, Object> additionalProperties = new HashMap<>();
 
-    public Coordinate()  {
-        //empty bean constructor for Parcel
+    public Coordinate () {
+        //empty bean constructor
     }
 
-    public Coordinate(Double latitude, Double longitude, Map<String, Object> additionalProperties) {
+    public Coordinate(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
-//        this.additionalProperties = additionalProperties;
     }
 
     public Double getLatitude() {
@@ -38,12 +36,5 @@ public class Coordinate {
         this.longitude = longitude;
     }
 
-//    public Map<String, Object> getAdditionalProperties() {
-//        return this.additionalProperties;
-//    }
-//
-//    public void setAdditionalProperty(String name, Object value) {
-//        this.additionalProperties.put(name, value);
-//    }
 
 }
