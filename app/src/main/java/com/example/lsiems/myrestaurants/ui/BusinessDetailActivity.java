@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.lsiems.myrestaurants.R;
-import com.example.lsiems.myrestaurants.adapters.RestaurantPagerAdapter;
-import com.example.lsiems.myrestaurants.models.Restaurant;
+import com.example.lsiems.myrestaurants.adapters.BusinessPagerAdapter;
+import com.example.lsiems.myrestaurants.models.Business;
 import com.example.lsiems.myrestaurants.util.ScaleAndFadePageTransformer;
 
 import org.parceler.Parcels;
@@ -16,19 +16,19 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class RestaurantDetailActivity extends AppCompatActivity {
+public class BusinessDetailActivity extends AppCompatActivity {
     @Bind(R.id.viewPager) ViewPager mViewPager;
-    RestaurantPagerAdapter adapterViewPager;
-    ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+    BusinessPagerAdapter adapterViewPager;
+    ArrayList<Business> mBusinesses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_detail);
         ButterKnife.bind(this);
-        mRestaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
+        mBusinesses = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
         int startingPosition = Integer.parseInt(getIntent().getStringExtra("position"));
-        adapterViewPager = new RestaurantPagerAdapter(getSupportFragmentManager(), mRestaurants);
+        adapterViewPager = new BusinessPagerAdapter(getSupportFragmentManager(), mBusinesses);
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(startingPosition);
         mViewPager.setPageTransformer(true, new ScaleAndFadePageTransformer());

@@ -1,8 +1,6 @@
 package com.example.lsiems.myrestaurants.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,15 +8,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -79,15 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == mFindRestaurantsButton) {
-//            Pattern matcher regex to confirm zip code entry
-//            String zipRegex = "^[0-9]{5}(?:-[0-9]{4})?$";
-//            Pattern pattern = Pattern.compile(zipRegex);
-//            Matcher matcher = pattern.matcher(location);
-            Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
+            Intent intent = new Intent(MainActivity.this, BusinessListActivity.class);
             startActivity(intent);
         }
         if (v == mSavedRestaurantsButton) {
-            Intent intent = new Intent(MainActivity.this, SavedRestaurantListActivity.class);
+            Intent intent = new Intent(MainActivity.this, SavedBusinessListActivity.class);
             startActivity(intent);
         }
     }

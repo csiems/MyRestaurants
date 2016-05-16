@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Bind(R.id.registerButton) Button mRegisterButton;
 
     private Firebase mFirebaseRef;
-    private Firebase.AuthResultHandler mAuthResultHandler;
+    private  Firebase.AuthResultHandler mAuthResultHandler;
     private ProgressDialog mAuthProgressDialog;
 
     @Override
@@ -38,65 +38,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
 
         mFirebaseRef = MyRestaurantsApplication.getAppInstance().getFirebaseRef();
-
-        mPasswordLoginButton.setOnClickListener(this);
-        mRegisterButton.setOnClickListener(this);
-
         initializeProgressDialog();
         initializeAuthResultHandler();
 
+        mPasswordLoginButton.setOnClickListener(this);
+        mRegisterButton.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-        if (v == mPasswordLoginButton) {
-            loginWithPassword();
-        }
-        if (v == mRegisterButton) {
-            registerNewUser();
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.passwordLoginButton:
+                loginWithPassword();
+                break;
+            case R.id.registerButton:
+                registerNewUser();
+                break;
         }
     }
 
-    private void showErrorDialog(String message) {
-        new AlertDialog.Builder(this)
-                .setTitle("Error")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
-
-
-    private void loginWithPassword() {
-        mAuthProgressDialog.show();
+    public void loginWithPassword() {
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
         mFirebaseRef.authWithPassword(email, password, mAuthResultHandler);
-    }
-
-    private void registerNewUser() {
-        mAuthProgressDialog.show();
-        final String email = mEmailEditText.getText().toString();
-        final String password = mPasswordEditText.getText().toString();
-
-        mFirebaseRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
-            @Override
-            public void onSuccess(Map<String, Object> stringObjectMap) {
-                mFirebaseRef.authWithPassword(email, password, mAuthResultHandler);
-            }
-
-            @Override
-            public void onError(FirebaseError firebaseError) {
-                Log.d("Registration error", firebaseError.toString());
-            }
-        } );
-    }
-
-    private void initializeProgressDialog() {
-        mAuthProgressDialog = new ProgressDialog(this);
-        mAuthProgressDialog.setTitle("Loading");
-        mAuthProgressDialog.setMessage("Authenticating with Firebase...");
-        mAuthProgressDialog.setCancelable(false);
     }
 
     private void initializeAuthResultHandler() {
@@ -115,11 +79,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
     }
 
+
+    public void registerNewUser() {
+        mAuthProgressDialog.show();
+        final String email = mEmailEditText.getText().toString();
+        final String password = mPasswordEditText.getText().toString();
+
+        mFirebaseRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+            @Override
+            public void onSuccess(Map<String, Object> stringObjectMap) {
+                mFirebaseRef.authWithPassword(email, password, mAuthResultHandler);
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                mAuthProgressDialog.hide();
+                showErrorDialog(firebaseError.toString());
+            }
+        });
+    }
+
+    private void initializeProgressDialog() {
+        mAuthProgressDialog = new ProgressDialog(this);
+        mAuthProgressDialog.setTitle("Loading");
+        mAuthProgressDialog.setMessage("Authenticating with Firebase");
+        mAuthProgressDialog.setCancelable(false);
+    }
+
+    public void showErrorDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     public void goToMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-            | Intent.FLAG_ACTIVITY_CLEAR_TASK
-            | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 }

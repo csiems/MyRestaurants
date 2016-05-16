@@ -11,7 +11,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
   private final ItemTouchHelperAdapter mAdapter;
 
   //Constructor that takes an ItemTouchHelperAdapter. When implemented in our
-  //FirebaseRestaurantListAdapter, this adapter passes the event back to the
+  //FirebaseBusinessListAdapter, this adapter passes the event back to the
   //Firebase adapter where we can then deal with what happens when an
   //item is moved or dismissed
   public SimpleItemTouchHelperCallback(ItemTouchHelperAdapter adapter) {

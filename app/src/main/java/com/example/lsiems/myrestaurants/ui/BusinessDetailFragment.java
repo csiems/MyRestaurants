@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
-import com.example.lsiems.myrestaurants.models.Restaurant;
+import com.example.lsiems.myrestaurants.models.Business;
 import com.firebase.client.Firebase;
 import com.squareup.picasso.Picasso;
 
@@ -23,10 +23,10 @@ import org.parceler.Parcels;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class RestaurantDetailFragment extends Fragment implements View.OnClickListener {
+public class BusinessDetailFragment extends Fragment implements View.OnClickListener {
     private Firebase mFirebaseRef;
     private String mCurrentUserUid;
-    private Restaurant mRestaurant;
+    private Business mBusiness;
     private static final int MAX_WIDTH = 400;
     private static final int MAX_HEIGHT = 300;
     @Bind(R.id.restaurantImageView) ImageView mImageLabel;
@@ -36,21 +36,21 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     @Bind(R.id.websiteTextView) TextView mWebsiteLabel;
     @Bind(R.id.phoneTextView) TextView mPhoneLabel;
     @Bind(R.id.addressTextView) TextView mAddressLabel;
-    @Bind(R.id.saveRestaurantButton) TextView mSaveRestaurantButton;
+    @Bind(R.id.saveRestaurantButton) TextView mSaveBusinessButton;
 
 
-    public static RestaurantDetailFragment newInstance(Restaurant restaurant) {
-        RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
+    public static BusinessDetailFragment newInstance(Business business) {
+        BusinessDetailFragment businessDetailFragment = new BusinessDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable("restaurant", Parcels.wrap(restaurant));
-        restaurantDetailFragment.setArguments(args);
-        return restaurantDetailFragment;
+        args.putParcelable("business", Parcels.wrap(business));
+        businessDetailFragment.setArguments(args);
+        return businessDetailFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRestaurant = Parcels.unwrap(getArguments().getParcelable("restaurant"));
+        mBusiness = Parcels.unwrap(getArguments().getParcelable("business"));
         mFirebaseRef = MyRestaurantsApplication.getAppInstance().getFirebaseRef();
         mCurrentUserUid = mFirebaseRef.getAuth().getUid();
     }
@@ -62,20 +62,20 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
         ButterKnife.bind(this, view);
 
         Picasso.with(view.getContext())
-                .load(mRestaurant.getImageUrl())
+                .load(mBusiness.getImageUrl())
                 .resize(MAX_WIDTH, MAX_HEIGHT)
                 .centerCrop()
                 .into(mImageLabel);
-        mNameLabel.setText(mRestaurant.getName());
-        mCategoriesLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getCategories()));
-        mRatingLabel.setText(Double.toString(mRestaurant.getRating()) + "/5");
-        mPhoneLabel.setText(mRestaurant.getPhone());
-        mAddressLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getAddress()));
+        mNameLabel.setText(mBusiness.getName());
+        mCategoriesLabel.setText(android.text.TextUtils.join(", ", mBusiness.getCategories()));
+        mRatingLabel.setText(Double.toString(mBusiness.getRating()) + "/5");
+        mPhoneLabel.setText(mBusiness.getPhone());
+        mAddressLabel.setText(android.text.TextUtils.join(", ", mBusiness.location.address));
 
         mWebsiteLabel.setOnClickListener(this);
         mPhoneLabel.setOnClickListener(this);
         mAddressLabel.setOnClickListener(this);
-        mSaveRestaurantButton.setOnClickListener(this);
+        mSaveBusinessButton.setOnClickListener(this);
         return view;
     }
 
@@ -83,24 +83,24 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
         if (v == mWebsiteLabel) {
             Intent webIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(mRestaurant.getWebsite()));
+                    Uri.parse(mBusiness.url));
             startActivity(webIntent);
         }
         if (v == mPhoneLabel) {
             Intent phoneIntent = new Intent(Intent.ACTION_DIAL,
-                    Uri.parse("tel:" + mRestaurant.getPhone()));
+                    Uri.parse("tel:" + mBusiness.getPhone()));
             startActivity(phoneIntent);
         }
         if (v == mAddressLabel) {
             Intent mapIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("geo:" + mRestaurant.getLatitude()
-                            + "," + mRestaurant.getLongitude()
-                            + "?q=(" + mRestaurant.getName() + ")"));
+                    Uri.parse("geo:" + mBusiness.location.coordinate.latitude
+                            + "," + mBusiness.location.coordinate.longitude
+                            + "?q=(" + mBusiness.name + ")"));
             startActivity(mapIntent);
         }
-        if (v == mSaveRestaurantButton) {
-            mFirebaseRef.child("restaurants/" + mCurrentUserUid + "/"
-                    + mRestaurant.getName()).setValue(mRestaurant);
+        if (v == mSaveBusinessButton) {
+            mFirebaseRef.child("businesss/" + mCurrentUserUid + "/"
+                    + mBusiness.name).setValue(mBusiness);
             Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }
     }

@@ -1,26 +1,28 @@
 package com.example.lsiems.myrestaurants.models;
 
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Parcel
 public class Location {
 
-    private List<String> address = new ArrayList<String>();
-    private String city;
-    private Coordinate coordinate;
-    private String countryCode;
-    private String crossStreets;
-    private List<String> displayAddress = new ArrayList<String>();
-    private Double geoAccuracy;
-    private List<String> neighborhoods = new ArrayList<String>();
-    private String postalCode;
-    private String stateCode;
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    public ArrayList<String> address = new ArrayList<String>();
+    public String city;
+    public Coordinate coordinate;
+    public String countryCode;
+    public String crossStreets;
+    public ArrayList<String> displayAddress = new ArrayList<String>();
+    public Double geoAccuracy;
+    public ArrayList<String> neighborhoods = new ArrayList<String>();
+    public String postalCode;
+    public String stateCode;
+//    public Map<String, Object> additionalProperties = new HashMap<>();
 
-    public Location(List<String> address, String city, Coordinate coordinate, String countryCode, String crossStreets, List<String> displayAddress, Double geoAccuracy, List<String> neighborhoods, String postalCode, String stateCode, Map<String, Object> additionalProperties) {
+    public Location(ArrayList<String> address, String city, Coordinate coordinate, String countryCode, String crossStreets, ArrayList<String> displayAddress, Double geoAccuracy, ArrayList<String> neighborhoods, String postalCode, String stateCode, Map<String, Object> additionalProperties) {
         this.address = address;
         this.city = city;
         this.coordinate = coordinate;
@@ -31,14 +33,14 @@ public class Location {
         this.neighborhoods = neighborhoods;
         this.postalCode = postalCode;
         this.stateCode = stateCode;
-        this.additionalProperties = additionalProperties;
+//        this.additionalProperties = additionalProperties;
     }
 
-    public List<String> getAddress() {
+    public ArrayList<String> getAddress() {
         return address;
     }
 
-    public void setAddress(List<String> address) {
+    public void setAddress(ArrayList<String> address) {
         this.address = address;
     }
 
@@ -74,11 +76,11 @@ public class Location {
         this.crossStreets = crossStreets;
     }
 
-    public List<String> getDisplayAddress() {
+    public ArrayList<String> getDisplayAddress() {
         return displayAddress;
     }
 
-    public void setDisplayAddress(List<String> displayAddress) {
+    public void setDisplayAddress(ArrayList<String> displayAddress) {
         this.displayAddress = displayAddress;
     }
 
@@ -90,11 +92,11 @@ public class Location {
         this.geoAccuracy = geoAccuracy;
     }
 
-    public List<String> getNeighborhoods() {
+    public ArrayList<String> getNeighborhoods() {
         return neighborhoods;
     }
 
-    public void setNeighborhoods(List<String> neighborhoods) {
+    public void setNeighborhoods(ArrayList<String> neighborhoods) {
         this.neighborhoods = neighborhoods;
     }
 
@@ -113,13 +115,13 @@ public class Location {
     public void setStateCode(String stateCode) {
         this.stateCode = stateCode;
     }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+//
+//    public Map<String, Object> getAdditionalProperties() {
+//        return this.additionalProperties;
+//    }
+//
+//    public void setAdditionalProperty(String name, Object value) {
+//        this.additionalProperties.put(name, value);
+//    }
 
 }

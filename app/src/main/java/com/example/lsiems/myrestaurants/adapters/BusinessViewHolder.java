@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lsiems.myrestaurants.R;
-import com.example.lsiems.myrestaurants.models.Restaurant;
-import com.example.lsiems.myrestaurants.ui.RestaurantDetailActivity;
+import com.example.lsiems.myrestaurants.models.Business;
+import com.example.lsiems.myrestaurants.ui.BusinessDetailActivity;
 import com.example.lsiems.myrestaurants.util.ItemTouchHelperViewHolder;
 import com.squareup.picasso.Picasso;
 
@@ -20,10 +20,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by lsiems on 3/28/16.
- */
-public class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
+public class BusinessViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
   private static final int MAX_WIDTH = 200;
   private static final int MAX_HEIGHT = 200;
   @Bind(R.id.restaurantImageView) ImageView mRestaurantImageView;
@@ -31,33 +28,33 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Vie
   @Bind(R.id.categoryTextView) TextView mCategoryTextView;
   @Bind(R.id.ratingTextView) TextView mRatingTextView;
   private Context mContext;
-  ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+  ArrayList<Business> mBusinesses = new ArrayList<>();
 
-  public RestaurantViewHolder(View itemView, ArrayList<Restaurant> restaurants) {
+  public BusinessViewHolder(View itemView, ArrayList<Business> businesses) {
     super(itemView);
     ButterKnife.bind(this, itemView);
     mContext = itemView.getContext();
-    mRestaurants = restaurants;
+    mBusinesses = businesses;
     itemView.setOnClickListener(this);
   }
 
   @Override
   public void onClick(View v) {
-    Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
+    Intent intent = new Intent(mContext, BusinessDetailActivity.class);
     intent.putExtra("position", getLayoutPosition() + "");
-    intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
+    intent.putExtra("businesses", Parcels.wrap(mBusinesses));
     mContext.startActivity(intent);
   }
 
-  public void bindRestaurant(Restaurant restaurant) {
+  public void bindBusiness(Business business) {
     Picasso.with(mContext)
-            .load(restaurant.getImageUrl())
+            .load(business.imageUrl)
             .resize(MAX_WIDTH, MAX_HEIGHT)
             .centerCrop()
             .into(mRestaurantImageView);
-    mNameTextView.setText(restaurant.getName());
-    mCategoryTextView.setText(restaurant.getCategories().get(0));
-    mRatingTextView.setText("Rating: " + restaurant.getRating() + "/5");
+    mNameTextView.setText(business.getName());
+    mCategoryTextView.setText(business.getCategories().get(0).toString());
+    mRatingTextView.setText("Rating: " + business.getRating() + "/5");
   }
 
   @Override

@@ -1,33 +1,40 @@
 package com.example.lsiems.myrestaurants.models;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Parcel
 public class Business {
 
-    private List<List<String>> categories = new ArrayList<>();
-    private String displayPhone;
-    private String id;
-    private String imageUrl;
-    private Boolean isClaimed;
-    private Boolean isClosed;
-    private Location location;
-    private String mobileUrl;
-    private String name;
-    private String phone;
-    private Double rating;
-    private String ratingImgUrl;
-    private String ratingImgUrlLarge;
-    private String ratingImgUrlSmall;
-    private Integer reviewCount;
-    private String snippetImageUrl;
-    private String snippetText;
-    private String url;
-    private Map<String, Object> additionalProperties = new HashMap<>();
+    public ArrayList<ArrayList<String>> categories = new ArrayList<>();
+    public String displayPhone;
+    public String id;
+    public String imageUrl;
+    public Boolean isClaimed;
+    public Boolean isClosed;
+    public Location location;
+    public String mobileUrl;
+    public String name;
+    public String phone;
+    public Double rating;
+    public String ratingImgUrl;
+    public String ratingImgUrlLarge;
+    public String ratingImgUrlSmall;
+    public Integer reviewCount;
+    public String snippetImageUrl;
+    public String snippetText;
+    public String url;
+//    public Map<String, Object> additionalProperties = new HashMap<>();
 
-    public Business(List<List<String>> categories, String displayPhone, String id, String imageUrl, Boolean isClaimed, Boolean isClosed, Location location, String mobileUrl, String name, String phone, Double rating, String ratingImgUrl, String ratingImgUrlLarge, String ratingImgUrlSmall, Integer reviewCount, String snippetImageUrl, String snippetText, String url, Map<String, Object> additionalProperties) {
+    public Business() {
+        //empty bean constructor for Parcel
+    }
+
+    public Business(ArrayList<ArrayList<String>> categories, String displayPhone, String id, String imageUrl, Boolean isClaimed, Boolean isClosed, Location location, String mobileUrl, String name, String phone, Double rating, String ratingImgUrl, String ratingImgUrlLarge, String ratingImgUrlSmall, Integer reviewCount, String snippetImageUrl, String snippetText, String url, Map<String, Object> additionalProperties) {
         this.categories = categories;
         this.displayPhone = displayPhone;
         this.id = id;
@@ -46,14 +53,14 @@ public class Business {
         this.snippetImageUrl = snippetImageUrl;
         this.snippetText = snippetText;
         this.url = url;
-        this.additionalProperties = additionalProperties;
+//        this.additionalProperties = additionalProperties;
     }
 
-    public List<List<String>> getCategories() {
+    public ArrayList<ArrayList<String>> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<List<String>> categories) {
+    public void setCategories(ArrayList<ArrayList<String>> categories) {
         this.categories = categories;
     }
 
@@ -193,13 +200,12 @@ public class Business {
         this.url = url;
     }
 
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+//    public Map<String, Object> getAdditionalProperties() {
+//        return this.additionalProperties;
+//    }
+//
+//    public void setAdditionalProperty(String name, Object value) {
+//        this.additionalProperties.put(name, value);
+//    }
 
 }
-

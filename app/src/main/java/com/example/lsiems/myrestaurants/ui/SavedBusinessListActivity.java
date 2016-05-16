@@ -1,6 +1,5 @@
 package com.example.lsiems.myrestaurants.ui;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +12,8 @@ import android.view.MenuItem;
 
 import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
-import com.example.lsiems.myrestaurants.adapters.FirebaseRestaurantListAdapter;
-import com.example.lsiems.myrestaurants.models.Restaurant;
+import com.example.lsiems.myrestaurants.adapters.FirebaseBusinessListAdapter;
+import com.example.lsiems.myrestaurants.models.Business;
 import com.example.lsiems.myrestaurants.util.OnStartDragListener;
 import com.example.lsiems.myrestaurants.util.SimpleItemTouchHelperCallback;
 import com.firebase.client.Firebase;
@@ -23,11 +22,11 @@ import com.firebase.client.Query;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SavedRestaurantListActivity extends AppCompatActivity implements OnStartDragListener {
+public class SavedBusinessListActivity extends AppCompatActivity implements OnStartDragListener {
   private Query mQuery;
   private Firebase mFirebaseRef;
   private String mCurrentUserUid;
-  private FirebaseRestaurantListAdapter mAdapter;
+  private FirebaseBusinessListAdapter mAdapter;
   private ItemTouchHelper mItemTouchHelper;
 
   @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
@@ -53,7 +52,7 @@ public class SavedRestaurantListActivity extends AppCompatActivity implements On
   }
 
   private void setUpRecyclerView() {
-    mAdapter = new FirebaseRestaurantListAdapter(mQuery, Restaurant.class, this);
+    mAdapter = new FirebaseBusinessListAdapter(mQuery, Business.class, this);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     mRecyclerView.setAdapter(mAdapter);
     ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
@@ -92,11 +91,11 @@ public class SavedRestaurantListActivity extends AppCompatActivity implements On
   @Override
   protected void onPause() {
     super.onPause();
-    for (Restaurant restaurant : mAdapter.getItems()) {
-      restaurant.setIndex(Integer.toString(mAdapter.getItems().indexOf(restaurant)));
-      mFirebaseRef.child("restaurants/" + mCurrentUserUid + "/"
-            + restaurant.getName())
-            .setValue(restaurant);
-    }
+//    for (Business business : mAdapter.getItems()) {
+//      business.setIndex(Integer.toString(mAdapter.getItems().indexOf(business)));
+//      mFirebaseRef.child("restaurants/" + mCurrentUserUid + "/"
+//              + business.getName())
+//              .setValue(business);
+//    }
   }
 }

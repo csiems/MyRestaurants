@@ -14,26 +14,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.lsiems.myrestaurants.BuildConfig;
 import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
-import com.example.lsiems.myrestaurants.adapters.RestaurantListAdapter;
-import com.example.lsiems.myrestaurants.services.YelpService;
-import com.example.lsiems.myrestaurants.models.Restaurant;
+import com.example.lsiems.myrestaurants.adapters.BusinessListAdapter;
+import com.example.lsiems.myrestaurants.models.Business;
+import com.example.lsiems.myrestaurants.models.SearchResponse;
+import com.example.lsiems.myrestaurants.services.YelpAPI;
+import com.example.lsiems.myrestaurants.services.YelpAPIFactory;
 import com.firebase.client.Firebase;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
-public class RestaurantListActivity extends AppCompatActivity {
+public class BusinessListActivity extends AppCompatActivity {
+  public static final String TAG = MainActivity.class.getSimpleName();
+  final String YELP_CONSUMER_KEY = BuildConfig.YELP_CONSUMER_KEY;
+  final String YELP_CONSUMER_SECRET = BuildConfig.YELP_CONSUMER_SECRET;
+  final String YELP_TOKEN = BuildConfig.YELP_TOKEN;
+  final String YELP_TOKEN_SECRET = BuildConfig.YELP_TOKEN_SECRET;
   @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
-  private RestaurantListAdapter mAdapter;
-  public ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+  private BusinessListAdapter mAdapter;
+  public ArrayList<Business> mBusinesses = new ArrayList<>();
   private SharedPreferences mSharedPreferences;
   private SharedPreferences.Editor mEditor;
   private String mRecentAddress;
@@ -104,30 +108,35 @@ public class RestaurantListActivity extends AppCompatActivity {
 
 
   private void getRestaurants(String location) {
-    final YelpService yelpService = new YelpService(this);
-
-    yelpService.findRestaurants(location, new Callback() {
+    String term = "food";
+    YelpAPIFactory apiFactory = new YelpAPIFactory(YELP_CONSUMER_KEY, YELP_CONSUMER_SECRET, YELP_TOKEN, YELP_TOKEN_SECRET);
+    YelpAPI yelpAPI = apiFactory.createAPI();
+    retrofit2.Call<SearchResponse> call = yelpAPI.search(term, location);
+    retrofit2.Callback<SearchResponse> callback = new retrofit2.Callback<SearchResponse>() {
       @Override
-      public void onFailure(Call call, IOException e) {
-        e.printStackTrace();
-      }
+      public void onResponse(retrofit2.Call<SearchResponse> call, retrofit2.Response<SearchResponse> response) {
+        SearchResponse searchResponse = response.body();
+        mBusinesses = searchResponse.getBusinesses();
 
-      @Override
-      public void onResponse(Call call, Response response) {
-        mRestaurants = yelpService.processResults(response);
-
-        RestaurantListActivity.this.runOnUiThread(new Runnable() {
+        BusinessListActivity.this.runOnUiThread(new Runnable() {
           @Override
           public void run() {
-            mAdapter = new RestaurantListAdapter(getApplicationContext(), mRestaurants);
+            mAdapter = new BusinessListAdapter(getApplicationContext(), mBusinesses);
             mRecyclerView.setAdapter(mAdapter);
             RecyclerView.LayoutManager layoutManager =
-                    new LinearLayoutManager(RestaurantListActivity.this);
+                    new LinearLayoutManager(BusinessListActivity.this);
             mRecyclerView.setLayoutManager(layoutManager);
             mRecyclerView.setHasFixedSize(true);
           }
         });
+
       }
-    });
+      @Override
+      public void onFailure(retrofit2.Call<SearchResponse> call, Throwable t) {
+        Log.d(TAG, t.toString());
+      }
+    };
+    call.enqueue(callback);
+
   }
 }

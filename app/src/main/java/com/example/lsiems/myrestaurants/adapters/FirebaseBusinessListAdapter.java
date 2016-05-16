@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.lsiems.myrestaurants.MyRestaurantsApplication;
 import com.example.lsiems.myrestaurants.R;
-import com.example.lsiems.myrestaurants.models.Restaurant;
+import com.example.lsiems.myrestaurants.models.Business;
 import com.example.lsiems.myrestaurants.util.FirebaseRecyclerAdapter;
 import com.example.lsiems.myrestaurants.util.ItemTouchHelperAdapter;
 import com.example.lsiems.myrestaurants.util.OnStartDragListener;
@@ -20,25 +20,25 @@ import java.util.Collections;
 /**
  * Created by lsiems on 3/28/16.
  */
-public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<RestaurantViewHolder, Restaurant> implements ItemTouchHelperAdapter{
+public class FirebaseBusinessListAdapter extends FirebaseRecyclerAdapter<BusinessViewHolder, Business> implements ItemTouchHelperAdapter{
 
   private final OnStartDragListener mDragStartListener;
 
-  public FirebaseRestaurantListAdapter(Query query, Class<Restaurant> itemClass, OnStartDragListener dragStartListener) {
+  public FirebaseBusinessListAdapter(Query query, Class<Business> itemClass, OnStartDragListener dragStartListener) {
     super(query, itemClass);
     mDragStartListener = dragStartListener;
   }
 
   @Override
-  public RestaurantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public BusinessViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext())
             .inflate(R.layout.restaurant_list_item_drag, parent, false);
-    return new RestaurantViewHolder(view, getItems());
+    return new BusinessViewHolder(view, getItems());
   }
 
   @Override
-  public void onBindViewHolder(final RestaurantViewHolder holder, int position) {
-    holder.bindRestaurant(getItem(position));
+  public void onBindViewHolder(final BusinessViewHolder holder, int position) {
+    holder.bindBusiness(getItem(position));
     holder.mRestaurantImageView.setOnTouchListener(new View.OnTouchListener() {
 
       @Override
@@ -52,24 +52,25 @@ public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<Resta
   }
 
   @Override
-  protected void itemAdded(Restaurant item, String key, int position) {
+  protected void itemAdded(Business item, String key, int position) {
 
   }
 
   @Override
-  protected void itemChanged(Restaurant oldItem, Restaurant newItem, String key, int position) {
+  protected void itemChanged(Business oldItem, Business newItem, String key, int position) {
 
   }
 
   @Override
-  protected void itemRemoved(Restaurant item, String key, int position) {
+  protected void itemRemoved(Business item, String key, int position) {
 
   }
 
   @Override
-  protected void itemMoved(Restaurant item, String key, int oldPosition, int newPosition) {
+  protected void itemMoved(Business item, String key, int oldPosition, int newPosition) {
 
   }
+
 
   @Override
   public boolean onItemMove(int fromPosition, int toPosition) {

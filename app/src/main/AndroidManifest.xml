@@ -25,20 +25,20 @@
             android:name=".ui.LoginActivity"
             android:label="Login/Setup"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.RestaurantListActivity">
+        <activity android:name=".ui.BusinessListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity"/>
         </activity>
-        <activity android:name=".ui.RestaurantDetailActivity">
+        <activity android:name=".ui.BusinessDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.RestaurantListActivity"/>
+                android:value=".ui.BusinessListActivity"/>
         </activity>
-        <activity android:name=".ui.SavedRestaurantListActivity">
+        <activity android:name=".ui.SavedBusinessListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.RestaurantListActivity">
+                android:value=".ui.BusinessListActivity">
             </meta-data>
         </activity>
     </application>
